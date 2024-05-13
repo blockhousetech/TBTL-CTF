@@ -1,0 +1,13 @@
+My Favorite Classmate
+=====================
+
+My favorite person in this class has a beautiful smile,
+great sense of humour, and lots of colorful notebooks.
+
+However, their most distinctive feature is the fact that
+you can represent their name as an integer value, square
+it modulo 1839221045943946468749590061514704444096822140639024607242755810381377444892113085421174752142441,
+and you'll get 1804671962891598586831251656431345607187951389706305029952427287330950271224234433906630527235349.
+
+By now, all of you have probably guessed who I'm talking about.
+
