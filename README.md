@@ -5,5 +5,6 @@ in some [TBTL CTF](https://ctftime.org/ctf/951) event.
 
 Thus far, we have organized the following [Capture the
 flag](https://en.wikipedia.org/wiki/Capture_the_flag_(cybersecurity)) events:
+  * [FortID CTF 2025](2025/README.md)
   * [TBTL CTF 2024](2024/README.md)
   * [TBTL CTF 2023](2023/README.md)
