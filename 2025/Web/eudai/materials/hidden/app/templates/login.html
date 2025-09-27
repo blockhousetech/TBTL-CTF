@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto card">
+  <h1 class="text-xl font-semibold mb-2">Login</h1>
+  <form method="post" class="space-y-3">
+    <div>
+      <label class="block text-sm">Email</label>
+      <input class="w-full rounded border px-3 py-2" name="username" value="{{ pref_username or '' }}" required>
+    </div>
+    <div>
+      <label class="block text-sm">Password</label>
+      <input type="password" class="w-full rounded border px-3 py-2" name="password" required>
+    </div>
+    <button class="px-4 py-2 rounded bg-blue-700 text-white">Login</button>
+  </form>
+</div>
+{% endblock %}

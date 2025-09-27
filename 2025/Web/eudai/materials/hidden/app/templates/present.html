@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-3xl mx-auto card">
+  <h1 class="text-xl font-semibold mb-4">Generate Presentation</h1>
+  {% if credential %}
+  <form method="post">
+    <input type="hidden" name="credential_id" value="{{ credential.id }}">
+    <div class="mb-3">
+      <div class="text-sm text-slate-600">Select which claims to disclose:</div>
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+        {% for k, v in claims.items() %}
+        <label class="inline-flex items-center space-x-2 border rounded px-3 py-2">
+          <input type="checkbox" name="claim_{{k}}" checked>
+          <span class="text-sm">{{k}}: <span class="text-slate-500">{{v}}</span></span>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label class="block text-sm">Choose relying party</label>
+      <select class="w-full rounded border px-3 py-2" name="verifier">
+        <option value="bank">Bank</option>
+        <option value="gov">Government Portal</option>
+        <option value="club">Private Club</option>
+      </select>
+    </div>
+    <button class="px-4 py-2 rounded bg-blue-700 text-white">Generate</button>
+  </form>
+  {% else %}
+  <div>No credential found. <a class="text-blue-700 underline" href="{{ url_for('issue') }}">Issue one</a>.</div>
+  {% endif %}
+</div>
+{% endblock %}

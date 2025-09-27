@@ -1,0 +1,4 @@
+.brand-gradient { background: linear-gradient(90deg, #003399 0%, #1e40af 100%); }
+.card  { @apply bg-white rounded-2xl shadow p-6; }
+.badge { @apply inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 border border-gray-200; }
+.copy-btn { @apply text-xs px-2 py-1 rounded border; }

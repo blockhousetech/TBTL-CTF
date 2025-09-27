@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="grid md:grid-cols-2 gap-6">
+  <section class="card">
+    <h1 class="text-2xl font-semibold mb-2">Wallet Showcase</h1>
+    <p class="text-slate-700">This demonstration shows a simplified PID issuance and selective-disclosure presentation workflow.</p>
+    <ul class="list-disc ml-6 mt-3 text-slate-700">
+      <li>Issue a PID-like credential to your wallet.</li>
+      <li>Select claims to disclose and generate a presentation.</li>
+      <li>Send the encoded presentation to a verifier.</li>
+    </ul>
+  </section>
+  <section class="card">
+    <h2 class="text-xl font-semibold mb-2">Getting started</h2>
+    <ol class="list-decimal ml-6 space-y-1 text-slate-700">
+      <li>Register or login.</li>
+      <li>Issue a credential (PID subset fields).</li>
+      <li>Generate a presentation and copy the encoded payload.</li>
+      <li>Paste it into the Verify page.</li>
+    </ol>
+  </section>
+</div>
+{% endblock %}

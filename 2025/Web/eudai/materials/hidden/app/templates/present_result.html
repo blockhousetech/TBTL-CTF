@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-3xl mx-auto card space-y-4">
+  <div class="flex items-center justify-between">
+    <h1 class="text-xl font-semibold">Presentation generated</h1>
+  </div>
+
+  <div>
+    <label class="block text-sm mb-2">Encoded presentation</label>
+    <textarea
+      id="enc"
+      readonly
+      class="w-full h-48 font-mono text-xs leading-5 bg-slate-50 border rounded-lg p-3 resize-none focus:outline-none"
+    >{{ encoded }}</textarea>
+
+    <div class="mt-3 flex items-center gap-3">
+      <button
+        id="copybtn"
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-600 text-white text-sm shadow hover:bg-blue-700 active:translate-y-[1px]"
+        onclick="copyTextArea('enc','copybtn')"
+        type="button"
+        aria-label="Copy encoded presentation"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4a2 2 0 0 0-2 2v12h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v16h13a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 18H8V7h11v16z"/></svg>
+        Copy encoded
+      </button>
+
+    </div>
+  </div>
+
+  <div class="pt-2">
+    <h2 class="font-semibold mb-2 text-sm">Disclosed claims</h2>
+    <!-- Clean, compact list -->
+    <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200">
+      {% for k, v in presented.items() %}
+      <li class="px-3 py-2 grid grid-cols-3 gap-2">
+        <span class="col-span-1 text-xs uppercase tracking-wide text-slate-500">{{ k }}</span>
+        <span class="col-span-2 font-mono text-sm break-words">{{ v }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

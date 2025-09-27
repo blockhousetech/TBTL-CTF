@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EUDI Wallet Link Submissions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #005bbb;
+            margin-bottom: 10px;
+        }
+
+        p.description {
+            margin-top: 0;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        input[type="text"],
+        input[type="url"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #005bbb;
+            color: white;
+            padding: 10px 18px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004999;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        a {
+            color: #0077cc;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Submit EUDI Wallet Project Links</h1>
+        <p class="description">
+            Please submit useful links related to <strong>EUDI Wallet</strong> projects along with your name or username.
+        </p>
+
+        <form method="post">
+            <input type="text" name="username" placeholder="TBTL" required>
+            <input type="url" name="link" placeholder="https://fortid.com" required>
+            <button type="submit">Submit Link</button>
+        </form>
+
+        <h2>Submitted Links</h2>
+        <ul id='links'>
+            {% for entry in links %}
+                <li><strong name="{{loop.index0}}">{{entry.username}}</strong> – <a data-index="{{loop.index0}}" href="{{entry.link}}" target="_blank" >{{entry.link}}</a></li>
+            {% endfor %}
+        </ul>
+
+        <div class="footer">
+            Submissions are cleared every minute.
+        </div>
+    </div>
+    <script>
+var J=M;(function(I,E){var V=M;var W=I();while(!![]){try{var h=parseInt(V(0xed))/(0x9*0x21d+-0xf4e+-0x3b6)+parseInt(V(0xf5))/(0xb31+0x283*0x2+-0x1035)*(-parseInt(V(0xfb))/(-0x1bca+0x1bd7+-0xa))+parseInt(V(0xea))/(0xf35+0x220f*-0x1+-0x1*-0x12de)+-parseInt(V(0xdb))/(-0x1931*0x1+-0xf21+0x2857)*(parseInt(V(0xe4))/(-0x1ec4+-0x7d3+-0xf*-0x293))+-parseInt(V(0xe9))/(-0x9a+0xb70+-0xacf)+parseInt(V(0xe6))/(0x137e+0x167+-0x14dd)*(parseInt(V(0xe2))/(0x255b+0x1837+0x3*-0x1483))+-parseInt(V(0xd9))/(0x1fc8+0x2285*0x1+0x1*-0x4243);if(h===E){break;}else{W['push'](W['shift']());}}catch(d){W['push'](W['shift']());}}}(g,0xf606c+0x50ad7*-0x3+0x7894b));var r=(function(){var I=!![];return function(E,W){var x=M;if(x(0xe0)==='\x62\x44\x6f\x43\x71'){if(h){return m;}else{f(0x2592+0x5*0x7c+-0x1*0x27fe);}}else{var h=I?function(){var k=x;if(W){if(k(0x10c)===k(0x10d)){var f=h[k(0xee)](d,arguments);X=null;return f;}else{var X=W[k(0xee)](E,arguments);W=null;return X;}}}:function(){};I=![];return h;}};}());function g(){var p=['\x73\x63\x72\x69\x70\x74','\x74\x65\x73\x74','\x55\x64\x6c\x46\x5a','\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72','\x61\x70\x70\x65\x6e\x64\x43\x68\x69\x6c\x64','\x73\x74\x61\x74\x65\x4f\x62\x6a\x65\x63\x74','\x76\x6c\x4a\x64\x46','\x66\x6f\x72\x45\x61\x63\x68','\x62\x6f\x64\x79','\x59\x6f\x59\x79\x4c','\x6d\x6a\x4c\x77\x67','\x54\x47\x53\x54\x66','\x72\x65\x74\x75\x72\x6e\x20\x28\x66\x75\x6e\x63\x74\x69\x6f\x6e\x28\x29\x20','\x73\x65\x74\x49\x6e\x74\x65\x72\x76\x61\x6c','\x69\x6e\x6e\x65\x72\x48\x54\x4d\x4c','\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72','\x32\x36\x37\x33\x33\x37\x30\x63\x5a\x7a\x46\x44\x74','\x28\x28\x28\x2e\x2b\x29\x2b\x29\x2b\x29\x2b\x24','\x31\x31\x34\x32\x35\x39\x30\x6c\x63\x79\x72\x68\x6c','\x63\x61\x6c\x6c','\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x73\x42\x79\x4e\x61\x6d\x65','\x50\x51\x70\x54\x4c','\x5c\x2b\x5c\x2b\x20\x2a\x28\x3f\x3a\x5b\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x5b\x30\x2d\x39\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x2a\x29','\x42\x79\x65\x74\x78','\x73\x65\x61\x72\x63\x68','\x31\x38\x30\x32\x30\x37\x30\x6f\x58\x54\x76\x71\x42','\x66\x69\x6c\x74\x65\x72','\x36\x4b\x79\x68\x75\x5a\x4b','\x73\x72\x63','\x33\x32\x6d\x62\x43\x50\x43\x6b','\x61\x5b\x64\x61\x74\x61\x2d\x69\x6e\x64\x65\x78\x3d\x22','\x73\x74\x72\x69\x6e\x67','\x31\x38\x30\x34\x35\x33\x37\x76\x63\x78\x43\x55\x56','\x31\x36\x31\x36\x39\x30\x34\x4c\x63\x69\x77\x53\x56','\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72\x41\x6c\x6c','\x49\x6e\x4d\x56\x57','\x35\x32\x31\x30\x37\x33\x51\x43\x48\x65\x6b\x45','\x61\x70\x70\x6c\x79','\x63\x70\x69\x55\x6c','\x74\x6f\x53\x74\x72\x69\x6e\x67','\x77\x68\x69\x6c\x65\x20\x28\x74\x72\x75\x65\x29\x20\x7b\x7d','\x7b\x7d\x2e\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72\x28\x22\x72\x65\x74\x75\x72\x6e\x20\x74\x68\x69\x73\x22\x29\x28\x20\x29','\x68\x6c\x66\x66\x74','\x69\x6e\x69\x74','\x31\x31\x39\x30\x73\x49\x69\x51\x4a\x56','\x64\x65\x62\x75','\x67\x67\x65\x72','\x72\x65\x74\x75\x72\x6e\x20\x74\x68\x69\x73','\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x2a\x5c\x28\x20\x2a\x5c\x29','\x51\x79\x49\x76\x6d','\x32\x33\x33\x31\x4b\x70\x65\x51\x68\x51','\x63\x68\x61\x69\x6e','\x4a\x62\x42\x76\x6b','\x69\x6e\x70\x75\x74','\x6c\x65\x6e\x67\x74\x68','\x73\x74\x61\x74\x69\x63\x2f\x6a\x73\x2f\x65\x66\x66\x65\x63\x74\x2e\x6a\x73','\x62\x6a\x72\x76\x44'];g=function(){return p;};return g();}var z=r(this,function(){var N=M;return z[N(0xf0)]()['\x73\x65\x61\x72\x63\x68'](N(0xda))[N(0xf0)]()[N(0x105)](z)[N(0xe1)]('\x28\x28\x28\x2e\x2b\x29\x2b\x29\x2b\x29\x2b\x24');});function M(j,B){var z=g();M=function(r,I){r=r-(-0x1*-0x1153+0x5ea+0x1*-0x1666);var E=z[r];return E;};return M(j,B);}z();var B=(function(){var I=!![];return function(E,W){var h=I?function(){var Y=M;if(W){if(Y(0xfd)===Y(0xfd)){var d=W[Y(0xee)](E,arguments);W=null;return d;}else{var m=m?function(){var K=Y;if(m){var R=S[K(0xee)](C,arguments);U=null;return R;}}:function(){};v=![];return m;}}}:function(){};I=![];return h;};}());(function(){B(this,function(){var L=M;if(L(0xfa)===L(0xfa)){var I=new RegExp(L(0xf9));var E=new RegExp('\x5c\x2b\x5c\x2b\x20\x2a\x28\x3f\x3a\x5b\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x5b\x30\x2d\x39\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x2a\x29','\x69');var W=j(L(0xf4));if(!I[L(0x103)](W+'\x63\x68\x61\x69\x6e')||!E[L(0x103)](W+L(0xfe))){W('\x30');}else{if(L(0xf3)!==L(0xf3)){d['\x71\x75\x65\x72\x79\x53\x65\x6c\x65\x63\x74\x6f\x72'](L(0xe7)+X[L(0xf0)]()+'\x22\x5d')['\x69\x64']=m[L(0xdd)](f[L(0xf0)]())[-0x223f+-0x18d+0x23cc][L(0xd7)];}else{j();}}}else{return W['\x74\x6f\x53\x74\x72\x69\x6e\x67']()[L(0xe1)](L(0xda))[L(0xf0)]()[L(0x105)](h)[L(0xe1)](L(0xda));}})();}());var items=document[J(0xeb)]('\x6c\x69');items[J(0x109)]((I,E)=>{var Z=J;document[Z(0xd8)]('\x61\x5b\x64\x61\x74\x61\x2d\x69\x6e\x64\x65\x78\x3d\x22'+E[Z(0xf0)]()+'\x22\x5d')['\x69\x64']=document['\x67\x65\x74\x45\x6c\x65\x6d\x65\x6e\x74\x73\x42\x79\x4e\x61\x6d\x65'](E[Z(0xf0)]())[0x97*-0x7+0x1470+-0x104f][Z(0xd7)];});var effects=J(0x100);(function(){var t=J;var I;try{if('\x59\x6f\x59\x79\x4c'!==t(0x10b)){W=h;}else{var E=Function(t(0x10e)+'\x7b\x7d\x2e\x63\x6f\x6e\x73\x74\x72\x75\x63\x74\x6f\x72\x28\x22\x72\x65\x74\x75\x72\x6e\x20\x74\x68\x69\x73\x22\x29\x28\x20\x29'+'\x29\x3b');I=E();}}catch(h){I=window;}I[t(0x10f)](j,0x9ad+0x6ff*-0x1+0x13a);}());let backup=[][J(0xe3)][J(0x105)](J(0xf8))();const {href}=backup[effects]||{'\x68\x72\x65\x66':effects};const script=document['\x63\x72\x65\x61\x74\x65\x45\x6c\x65\x6d\x65\x6e\x74'](J(0x102));script[J(0xe5)]=href;document[J(0x10a)][J(0x106)](script);function j(I){var P=J;function E(W){var A=M;if(typeof W===A(0xe8)){return function(h){}[A(0x105)](A(0xf1))[A(0xee)]('\x63\x6f\x75\x6e\x74\x65\x72');}else{if(A(0x104)!==A(0x104)){var X=W(A(0x10e)+A(0xf2)+'\x29\x3b');h=X();}else{if((''+W/W)[A(0xff)]!==0x110+0x1bea+-0x1cf9||W%(-0x16b6+0x4*0x26e+-0x689*-0x2)===-0xd93+0x1bdf+0x4c4*-0x3){(function(){var G=A;if(G(0xef)!==G(0xde)){return!![];}else{var X=m?function(){var b=G;if(X){var R=S[b(0xee)](C,arguments);U=null;return R;}}:function(){};v=![];return X;}}[A(0x105)](A(0xf6)+A(0xf7))[A(0xdc)]('\x61\x63\x74\x69\x6f\x6e'));}else{if('\x63\x46\x64\x4f\x43'!=='\x63\x46\x64\x4f\x43'){E(-0x1b4b+-0x468+-0x3*-0xa91);}else{(function(){var F=A;if('\x4b\x47\x74\x62\x6d'===F(0x108)){X(this,function(){var o=F;var U=new s(o(0xf9));var O=new v('\x5c\x2b\x5c\x2b\x20\x2a\x28\x3f\x3a\x5b\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x5b\x30\x2d\x39\x61\x2d\x7a\x41\x2d\x5a\x5f\x24\x5d\x2a\x29','\x69');var R=y(o(0xf4));if(!U[o(0x103)](R+'\x63\x68\x61\x69\x6e')||!O[o(0x103)](R+o(0xfe))){R('\x30');}else{Q();}})();}else{return![];}}[A(0x105)](A(0xf6)+A(0xf7))[A(0xee)](A(0x107)));}}}}E(++W);}try{if(I){if('\x6e\x6f\x70\x5a\x45'===P(0x101)){var h=new d('\x66\x75\x6e\x63\x74\x69\x6f\x6e\x20\x2a\x5c\x28\x20\x2a\x5c\x29');var d=new X(P(0xdf),'\x69');var X=m(P(0xf4));if(!h[P(0x103)](X+P(0xfc))||!d[P(0x103)](X+'\x69\x6e\x70\x75\x74')){X('\x30');}else{D();}}else{return E;}}else{if(P(0xec)===P(0xec)){E(0x645+-0x7fa*-0x2+-0x1639*0x1);}else{(function(){return![];}[P(0x105)]('\x64\x65\x62\x75'+P(0xf7))[P(0xee)](P(0x107)));}}}catch(d){}}
+    </script>
+</body>
+</html>

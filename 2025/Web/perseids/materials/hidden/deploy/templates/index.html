@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Perseids — Pure JS</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --bg1: #03040a;
+    --bg2: #0a0f24;
+    --hud: #9bb7ff;
+    --hud-dim: #5b6c9e;
+  }
+  html, body { margin:0; height:100%; background:
+      radial-gradient(120vmax 120vmax at 70% 15%, var(--bg2), var(--bg1) 60%) fixed, #000;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    overflow:hidden; }
+  canvas { display:block; width:100%; height:100%; filter:contrast(1.02) saturate(1.05); image-rendering:optimizeSpeed; }
+  .hud { position:fixed; top:12px; left:12px; padding:8px 10px;
+    background: rgba(11,16,35,.6); border:1px solid rgba(157,214,255,.15); border-radius:8px;
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    color:#9bb7ff; font-size:12px; line-height:1.35; user-select:none; }
+  .hud .dim { color:#5b6c9e; }
+  .hud .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .hud .kbd { display:inline-block; padding:0 4px; border:1px solid rgba(157,214,255,.25); border-radius:4px; font-size:11px; }
+  .badge { position:fixed; bottom:10px; right:12px; color:#5f6b92; font-size:11px; user-select:none; }
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas>
+<div class="hud">
+  <div><strong>Perseids</strong></div>
+  <div class="dim">Radiant (approx): <span class="mono" id="rad">x</span></div>
+  <div class="dim">Meteors: <span class="mono" id="count">0</span> &nbsp;FPS: <span class="mono" id="fps">–</span></div>
+  <div class="dim">Controls: <span class="kbd">B</span> burst &middot; <span class="kbd">R</span> lock radiant &middot; <span class="kbd">Space</span> pause</div>
+</div>
+<div class="badge">FortID CTF</div>
+
+<script type="module">
+
+  import init, { generate_seed } from "/static/perseids.js";
+  await init();
+
+(() => {
+  const canvas = document.getElementById('sky');
+  const ctx = canvas.getContext('2d');
+  const hudCount = document.getElementById('count');
+  const hudFps = document.getElementById('fps');
+  const hudRad = document.getElementById('rad');
+
+  // --- Starfield STATE (declare BEFORE any function that uses them, e.g., resize) ---
+  const stars = [];
+  let showStars = true;
+  let starfieldNeedsRedraw = true;
+  const starCanvas = document.createElement('canvas');
+  const starCtx = starCanvas.getContext('2d');
+
+  // --- Canvas sizing ---
+  let DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2.5));
+  let W = 0, H = 0, CX = 0, CY = 0;
+
+  function resize() {
+    DPR = Math.max(1, Math.min(window.devicePixelRatio || 1, 2.5));
+    W = Math.floor(innerWidth * DPR);
+    H = Math.floor(innerHeight * DPR);
+    canvas.width = W;
+    canvas.height = H;
+    canvas.style.width = innerWidth + 'px';
+    canvas.style.height = innerHeight + 'px';
+    CX = W * 0.5;
+    CY = H * 0.45;
+    starfieldNeedsRedraw = true; // safe now
+  }
+  addEventListener('resize', resize, { passive:true });
+  resize();
+
+  // --- RNG ---
+  let seed = generate_seed();
+  function rand() { seed = (Math.imul(seed ^ 0x85ebca6b, 0xc2b2ae35) + 0x27d4eb2d) >>> 0; return (seed >>> 8) / 0xFFFFFF; }
+  function randRange(a,b){ return a + (b-a)*rand(); }
+
+  // --- Radiant ---
+  let radiant = { x: 0.78, y: 0.25 }; // normalized
+  let radiantLocked = false;
+  function setHudRad(){ hudRad.textContent = `${(radiant.x*100).toFixed(1)}%, ${(radiant.y*100).toFixed(1)}%`; }
+  setHudRad();
+
+  // --- Starfield drawing ---
+  function regenStars() {
+    stars.length = 0;
+    const density = Math.min(0.0012 * (W * H) / (800 * 600), 600);
+    const n = Math.floor(density);
+    for (let i=0;i<n;i++) {
+      stars.push({ x: Math.floor(rand()*W), y: Math.floor(rand()*H), b: randRange(0.25, 1.0), r: randRange(0.6, 1.8) * DPR });
+    }
+  }
+  function drawStarfield() {
+    if (!showStars || !starfieldNeedsRedraw) return;
+    starCanvas.width = W; starCanvas.height = H;
+    const g = starCtx.createLinearGradient(0, 0, W, H);
+    g.addColorStop(0, 'rgba(140,170,255,0.03)');
+    g.addColorStop(1, 'rgba(120,150,255,0.00)');
+    starCtx.fillStyle = g; starCtx.fillRect(0,0,W,H);
+    regenStars();
+    starCtx.save(); starCtx.filter = 'blur(0.5px)';
+    for (const s of stars) {
+      starCtx.globalAlpha = 0.6 * s.b;
+      starCtx.fillStyle = 'white';
+      starCtx.beginPath(); starCtx.arc(s.x, s.y, s.r, 0, Math.PI*2); starCtx.fill();
+      if (s.b > 0.85 && rand() < 0.5) {
+        starCtx.globalAlpha = 0.18 * s.b;
+        starCtx.fillStyle = 'rgb(160,200,255)';
+        starCtx.beginPath(); starCtx.arc(s.x, s.y, s.r*1.8, 0, Math.PI*2); starCtx.fill();
+      }
+    }
+    starCtx.restore();
+    starfieldNeedsRedraw = false;
+  }
+
+  // --- Meteors ---
+  const meteors = [];
+  const MAX_METEORS = 300;
+  let spawnAccumulator = 0;
+
+  function spawnMeteor(burst=false) {
+    if (meteors.length >= MAX_METEORS) return;
+    const rx = radiant.x * W, ry = radiant.y * H;
+    const baseAngle = Math.atan2(H - ry, 0 - rx);
+    const jitter = randRange(-0.6, 0.6);
+    const angle = baseAngle + jitter * randRange(0.15, 0.45);
+    const speed = burst ? randRange(1400, 2100) : randRange(700, 1400);
+    const life = randRange(0.35, 0.95);
+    const len = randRange(120, 320);
+    const thickness = randRange(1.0, 2.2) * DPR;
+    const sparkle = rand() < 0.2;
+    const startDist = randRange(10, 40) * DPR;
+    const sx = rx + Math.cos(angle) * startDist;
+    const sy = ry + Math.sin(angle) * startDist;
+    const vx = Math.cos(angle) * speed, vy = Math.sin(angle) * speed;
+    meteors.push({ x:sx, y:sy, vx, vy, life, t:0, len, thickness, sparkle, alpha:1 });
+  }
+  function burst(n=20){ for (let i=0;i<n;i++) spawnMeteor(true); }
+
+  function drawMeteor(m) {
+    const nx = -m.vx, ny = -m.vy;
+    const mag = Math.hypot(nx, ny) || 1;
+    const ux = nx / mag, uy = ny / mag;
+    const trailLen = m.len * (0.5 + 0.5 * (1 - m.t / m.life));
+    const tx = m.x + ux * trailLen, ty = m.y + uy * trailLen;
+
+    ctx.save();
+    const coreA = Math.max(0, 0.85 * m.alpha);
+    const glowA = Math.max(0, 0.25 * m.alpha);
+    const tailA = Math.max(0, 0.15 * m.alpha);
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineWidth = m.thickness * 6; ctx.strokeStyle = `rgba(157,214,255,${glowA})`;
+    ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(tx, ty); ctx.stroke();
+    ctx.lineWidth = m.thickness * 2.4; ctx.strokeStyle = `rgba(127,184,255,${tailA})`;
+    ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(tx, ty); ctx.stroke();
+    ctx.lineWidth = m.thickness; ctx.strokeStyle = `rgba(255,252,238,${coreA})`;
+    ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(tx, ty); ctx.stroke();
+    if (m.sparkle && rand() < 0.35 * m.alpha) {
+      const spx = m.x + ux * randRange(0, trailLen), spy = m.y + uy * randRange(0, trailLen);
+      ctx.globalAlpha = 0.6 * m.alpha; ctx.fillStyle = 'rgba(200,230,255,0.8)';
+      ctx.beginPath(); ctx.arc(spx, spy, 1.2 * DPR, 0, Math.PI*2); ctx.fill();
+    }
+    ctx.restore();
+  }
+
+  // --- Main loop ---
+  let paused = false;
+  let last = performance.now();
+  let frameCounter = 0, fpsLast = performance.now(), fps = 0;
+
+  function step(now) {
+    if (paused) { requestAnimationFrame(step); return; }
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+
+    const spawnRate = 1.85; // meteors per second
+    spawnAccumulator += dt * spawnRate;
+    while (spawnAccumulator >= 1) { spawnMeteor(false); spawnAccumulator -= 1; }
+
+    drawStarfield();
+    ctx.clearRect(0,0,W,H);
+    if (showStars) ctx.drawImage(starCanvas, 0, 0);
+
+    const vgrad = ctx.createRadialGradient(CX, CY, Math.min(W,H)*0.2, CX, CY, Math.max(W,H)*0.7);
+    vgrad.addColorStop(0, 'rgba(0,0,0,0)'); vgrad.addColorStop(1, 'rgba(0,0,0,0.4)');
+    ctx.fillStyle = vgrad; ctx.fillRect(0,0,W,H);
+
+    for (let i = meteors.length - 1; i >= 0; i--) {
+      const m = meteors[i];
+      const drag = 1 - 0.12 * dt;
+      m.t += dt; m.vx *= drag; m.vy *= drag; m.x += m.vx * dt; m.y += m.vy * dt;
+      m.alpha = Math.max(0, 1 - (m.t / m.life));
+      drawMeteor(m);
+      if (m.alpha <= 0 || m.x < -200 || m.y < -200 || m.x > W + 200 || m.y > H + 200) meteors.splice(i,1);
+    }
+
+    hudCount.textContent = String(meteors.length);
+    frameCounter++;
+    if (now - fpsLast >= 500) {
+      fps = Math.round((frameCounter * 1000) / (now - fpsLast));
+      hudFps.textContent = String(fps);
+      frameCounter = 0; fpsLast = now;
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+
+  // --- Interactions ---
+  function setRadiantFromPointer(px, py) {
+    radiant.x = Math.min(0.98, Math.max(0.02, px / innerWidth));
+    radiant.y = Math.min(0.60, Math.max(0.02, py / innerHeight));
+    setHudRad(); starfieldNeedsRedraw = true;
+  }
+  addEventListener('pointermove', (e) => {
+    if (!radiantLocked) setRadiantFromPointer(e.clientX, e.clientY);
+  }, { passive:true });
+  addEventListener('pointerdown', () => burst(Math.floor(randRange(10, 22))), { passive:true });
+
+  addEventListener('keydown', (e) => {
+    if (e.code === 'Space') { paused = !paused; e.preventDefault(); }
+    else if (e.key === 'b' || e.key === 'B') { burst(Math.floor(randRange(16, 32))); }
+    else if (e.key === 'r' || e.key === 'R') { radiantLocked = !radiantLocked; }
+  });
+
+  document.addEventListener('visibilitychange', () => { paused = (document.visibilityState !== 'visible'); });
+  setTimeout(() => burst(12), 350);
+})();
+</script>
+</body>
+</html>

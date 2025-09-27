@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-4">Wallet</h1>
+<div class="grid md:grid-cols-3 gap-6">
+  <div class="card md:col-span-1">
+    <h2 class="font-semibold mb-2">Account</h2>
+    <div class="text-sm text-slate-600">Email</div>
+    <div class="mb-2">{{ user.username }}</div>
+  </div>
+  <div class="card md:col-span-2">
+    <h2 class="font-semibold mb-2">Credentials</h2>
+    {% if credentials %}
+      <ul class="space-y-3">
+        {% for c in credentials %}
+        <li class="border rounded p-3">
+          <div class="text-sm text-slate-500">Type: {{ c.ctype }}</div>
+          <div class="text-xs text-slate-500">Issued at: {{ c.issued_at }}</div>
+          <pre class="bg-slate-50 p-2 rounded mt-2 text-xs">{{ c.claims_json | tojson(indent=2) }}</pre>
+        </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="text-slate-600">No credentials yet. <a class="text-blue-700 underline" href="{{ url_for('issue') }}">Issue one</a>.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

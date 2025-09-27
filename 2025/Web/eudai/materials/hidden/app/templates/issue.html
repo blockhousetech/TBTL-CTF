@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto card">
+  <h1 class="text-xl font-semibold mb-4">Issue PID-like Credential</h1>
+  <form method="post" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div><label class="block text-sm">Family name</label><input class="w-full rounded border px-3 py-2" name="family_name" required></div>
+    <div><label class="block text-sm">Given name</label><input class="w-full rounded border px-3 py-2" name="given_name" required></div>
+    <div><label class="block text-sm">Birth date</label><input type="date" class="w-full rounded border px-3 py-2" name="birth_date" required></div>
+    <div class="flex items-center gap-2 mt-6"><input type="checkbox" name="age_over_18" checked><label class="text-sm">Age over 18</label></div>
+    <div><label class="block text-sm">Nationality (Alpha-2)</label><input class="w-full rounded border px-3 py-2" name="nationality" value="HR"></div>
+    <div><label class="block text-sm">Issuing authority</label><input class="w-full rounded border px-3 py-2" name="issuing_authority" value="EUDI PID Authority" required></div>
+    <div><label class="block text-sm">Issuing country (Alpha-2)</label><input class="w-full rounded border px-3 py-2" name="issuing_country" value="HR" required></div>
+    <div><label class="block text-sm">Issuance date</label><input type="date" class="w-full rounded border px-3 py-2" name="issuance_date" value="{{ default_issuance }}"></div>
+    <div><label class="block text-sm">Expiry date</label><input type="date" class="w-full rounded border px-3 py-2" name="expiry_date" value="{{ default_expiry }}"></div>
+    <div><label class="block text-sm">Document number</label><input class="w-full rounded border px-3 py-2" name="document_number"></div>
+    <div class="md:col-span-2">
+      <label class="inline-flex items-center space-x-2"><input type="checkbox" name="include_flag"> <span>Add demonstration flag claim</span></label>
+    </div>
+    <div class="md:col-span-2">
+      <button class="px-4 py-2 rounded bg-blue-700 text-white">Issue</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

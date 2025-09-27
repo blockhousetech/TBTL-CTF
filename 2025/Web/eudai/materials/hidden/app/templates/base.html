@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>European Digital Identity — Wallet Showcase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+  </head>
+  <body class="bg-slate-50 text-slate-900 min-h-screen">
+    <header class="brand-gradient text-white">
+      <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-yellow-400 rounded-sm"></div>
+          <div class="font-semibold">European Digital Identity</div>
+          <div class="text-sm opacity-90">Wallet Showcase</div>
+        </div>
+        <nav class="space-x-4 text-sm">
+          <a class="hover:underline" href="{{ url_for('home') }}">Home</a>
+          {% if session.get('user') %}
+            <a class="hover:underline" href="{{ url_for('profile') }}">Wallet</a>
+            <a class="hover:underline" href="{{ url_for('issue') }}">Issue</a>
+            <a class="hover:underline" href="{{ url_for('present') }}">Present</a>
+            <a class="hover:underline" href="{{ url_for('verify') }}">Verify</a>
+            <a class="hover:underline" href="{{ url_for('logout') }}">Logout</a>
+          {% else %}
+            <a class="hover:underline" href="{{ url_for('login') }}">Login</a>
+            <a class="hover:underline" href="{{ url_for('register') }}">Register</a>
+          {% endif %}
+        </nav>
+      </div>
+    </header>
+    <main class="max-w-6xl mx-auto px-4 py-8">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="mb-4">
+            {% for m in messages %}
+              <div class="bg-blue-50 border border-blue-200 text-blue-800 rounded p-3 mb-2">{{ m }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="text-center text-xs text-slate-500 py-8">
+      Demonstration interface for a hypothetical EUDI Wallet flow.
+    </footer>
+    <script>
+      function copyTextArea(id, btnId){
+        const ta = document.getElementById(id);
+        const btn = document.getElementById(btnId);
+        if(!ta) return;
+
+        ta.focus();
+        ta.select();
+        ta.setSelectionRange(0, 999999);
+
+        navigator.clipboard.writeText(ta.value).then(()=>{
+          if(btn){
+            const original = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('bg-green-600');
+            btn.classList.remove('bg-blue-600','hover:bg-blue-700');
+            setTimeout(()=>{
+              btn.textContent = original;
+              btn.classList.remove('bg-green-600');
+              btn.classList.add('bg-blue-600','hover:bg-blue-700');
+            }, 1200);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

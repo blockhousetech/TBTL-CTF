@@ -1,0 +1,21 @@
+[package]
+name = "perseids"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+bincode = "1"
+serde = { version = "1", features = ["derive"] }
+zeroize = "1"
+web-sys = { version = "0.3", features = ["Window", "Crypto"] }
+
+[profile.release]
+opt-level = "z"        # smallest code size ("s" or "z"; use 3 for max speed)
+lto = "fat"            # link-time optimization across the whole crate graph
+codegen-units = 1      # better optimization
+panic = "abort"        # remove unwinding machinery
+strip = "symbols"      # or true (symbols+debuginfo); needs recent Cargo
