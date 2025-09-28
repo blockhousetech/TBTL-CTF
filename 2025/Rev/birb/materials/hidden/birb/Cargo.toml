@@ -1,0 +1,9 @@
+[package]
+name = "birb"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+aes-gcm = { version = "0.10", features = ["aes"] }   # AES‑GCM 128/256
+sha2     = "0.10"                                    # SHA‑256
+unicode-segmentation = "1.12"                        # grapheme handling
